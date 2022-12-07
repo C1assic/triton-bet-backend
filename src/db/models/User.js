@@ -2,16 +2,13 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {
-      this.hasMany(models.AuthToken);
-      this.hasOne(models.Balance);
-    }
+    static associate() {}
   }
 
   User.init(
     {
       address: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(50),
         validate: { isLowercase: true },
         allowNull: false,
         unique: true,
@@ -20,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'user',
     },
   );
 

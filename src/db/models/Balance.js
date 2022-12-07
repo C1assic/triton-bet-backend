@@ -2,16 +2,15 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Balance extends Model {
-    static associate(models) {
-      this.belongsTo(models.User);
-    }
+    static associate() {}
   }
 
   Balance.init(
     {
-      balance: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Баланс' },
-      profit: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Профит' },
-      bonuse: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Бонус' },
+      basic: { type: DataTypes.DOUBLE.UNSIGNED, allowNull: false, defaultValue: 0, comment: 'Базовый баланс' },
+      profit: { type: DataTypes.DOUBLE.UNSIGNED, allowNull: false, defaultValue: 0, comment: 'Профит' },
+      bonuse: { type: DataTypes.DOUBLE.UNSIGNED, allowNull: false, defaultValue: 0, comment: 'Бонусы' },
+      userId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false, comment: 'ID пользователя' },
     },
     {
       sequelize,

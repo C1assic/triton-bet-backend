@@ -40,7 +40,7 @@
                 "authIpAddress": {
                     "comment": "IP при авторизации",
                     "field": "authIpAddress",
-                    "seqType": "Sequelize.STRING(255)"
+                    "seqType": "Sequelize.STRING(50)"
                 },
                 "isCanceled": {
                     "defaultValue": {
@@ -50,16 +50,11 @@
                     "field": "isCanceled",
                     "seqType": "Sequelize.BOOLEAN"
                 },
-                "UserId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "UserId",
-                    "seqType": "Sequelize.INTEGER"
+                "userId": {
+                    "allowNull": false,
+                    "comment": "ID пользователя",
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
                 }
             },
             "indexes": []
@@ -74,14 +69,14 @@
                     "field": "id",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "balance": {
+                "basic": {
                     "allowNull": false,
                     "defaultValue": {
                         "value": 0
                     },
-                    "comment": "Баланс",
-                    "field": "balance",
-                    "seqType": "Sequelize.DOUBLE"
+                    "comment": "Базовый баланс",
+                    "field": "basic",
+                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
                 },
                 "profit": {
                     "allowNull": false,
@@ -90,27 +85,22 @@
                     },
                     "comment": "Профит",
                     "field": "profit",
-                    "seqType": "Sequelize.DOUBLE"
+                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
                 },
                 "bonuse": {
                     "allowNull": false,
                     "defaultValue": {
                         "value": 0
                     },
-                    "comment": "Бонус",
+                    "comment": "Бонусы",
                     "field": "bonuse",
-                    "seqType": "Sequelize.DOUBLE"
+                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
                 },
-                "UserId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "UserId",
-                    "seqType": "Sequelize.INTEGER"
+                "userId": {
+                    "allowNull": false,
+                    "comment": "ID пользователя",
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
                 }
             },
             "indexes": []
@@ -129,7 +119,7 @@
                     "allowNull": false,
                     "comment": "Адрес кошелька",
                     "field": "address",
-                    "seqType": "Sequelize.STRING(255)"
+                    "seqType": "Sequelize.STRING(50)"
                 },
                 "message": {
                     "allowNull": false,
@@ -156,22 +146,17 @@
                     "field": "wasUsed",
                     "seqType": "Sequelize.BOOLEAN"
                 },
-                "UserId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Users",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "UserId",
-                    "seqType": "Sequelize.INTEGER"
+                "userId": {
+                    "allowNull": false,
+                    "comment": "ID пользователя",
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
                 }
             },
             "indexes": []
         },
-        "Users": {
-            "tableName": "Users",
+        "users": {
+            "tableName": "users",
             "schema": {
                 "id": {
                     "allowNull": false,
@@ -185,7 +170,7 @@
                     "unique": true,
                     "comment": "Адрес кошелька",
                     "field": "address",
-                    "seqType": "Sequelize.STRING(255)"
+                    "seqType": "Sequelize.STRING(50)"
                 },
                 "createdAt": {
                     "allowNull": false,

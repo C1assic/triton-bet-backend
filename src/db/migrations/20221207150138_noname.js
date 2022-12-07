@@ -3,54 +3,21 @@ const Sequelize = require("sequelize");
 /**
  * Actions summary:
  *
- * createTable() => "Users", deps: []
- * createTable() => "AuthTokens", deps: [Users]
- * createTable() => "Balances", deps: [Users]
- * createTable() => "MessageForSigns", deps: [Users]
+ * createTable() => "AuthTokens", deps: []
+ * createTable() => "Balances", deps: []
+ * createTable() => "MessageForSigns", deps: []
+ * createTable() => "users", deps: []
  *
  */
 
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-12-07T09:47:51.330Z",
+  created: "2022-12-07T15:01:38.664Z",
   comment: "",
 };
 
 const migrationCommands = (transaction) => [
-  {
-    fn: "createTable",
-    params: [
-      "Users",
-      {
-        id: {
-          type: Sequelize.INTEGER,
-          field: "id",
-          autoIncrement: true,
-          primaryKey: true,
-          allowNull: false,
-        },
-        address: {
-          type: Sequelize.STRING(255),
-          field: "address",
-          comment: "Адрес кошелька",
-          unique: true,
-          allowNull: false,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-          field: "createdAt",
-          allowNull: false,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
-          field: "updatedAt",
-          allowNull: false,
-        },
-      },
-      { transaction },
-    ],
-  },
   {
     fn: "createTable",
     params: [
@@ -85,7 +52,7 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         authIpAddress: {
-          type: Sequelize.STRING(255),
+          type: Sequelize.STRING(50),
           field: "authIpAddress",
           comment: "IP при авторизации",
         },
@@ -95,13 +62,11 @@ const migrationCommands = (transaction) => [
           comment: "Отозван ли токен",
           defaultValue: false,
         },
-        UserId: {
-          type: Sequelize.INTEGER,
-          field: "UserId",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "Users", key: "id" },
-          allowNull: true,
+        userId: {
+          type: Sequelize.INTEGER.UNSIGNED,
+          field: "userId",
+          comment: "ID пользователя",
+          allowNull: false,
         },
       },
       { transaction },
@@ -119,34 +84,32 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        balance: {
-          type: Sequelize.DOUBLE,
-          field: "balance",
-          comment: "Баланс",
+        basic: {
+          type: Sequelize.DOUBLE.UNSIGNED,
+          field: "basic",
+          comment: "Базовый баланс",
           defaultValue: 0,
           allowNull: false,
         },
         profit: {
-          type: Sequelize.DOUBLE,
+          type: Sequelize.DOUBLE.UNSIGNED,
           field: "profit",
           comment: "Профит",
           defaultValue: 0,
           allowNull: false,
         },
         bonuse: {
-          type: Sequelize.DOUBLE,
+          type: Sequelize.DOUBLE.UNSIGNED,
           field: "bonuse",
-          comment: "Бонус",
+          comment: "Бонусы",
           defaultValue: 0,
           allowNull: false,
         },
-        UserId: {
-          type: Sequelize.INTEGER,
-          field: "UserId",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "Users", key: "id" },
-          allowNull: true,
+        userId: {
+          type: Sequelize.INTEGER.UNSIGNED,
+          field: "userId",
+          comment: "ID пользователя",
+          allowNull: false,
         },
       },
       { transaction },
@@ -165,7 +128,7 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         address: {
-          type: Sequelize.STRING(255),
+          type: Sequelize.STRING(50),
           field: "address",
           comment: "Адрес кошелька",
           allowNull: false,
@@ -190,13 +153,44 @@ const migrationCommands = (transaction) => [
           defaultValue: false,
           allowNull: false,
         },
-        UserId: {
+        userId: {
+          type: Sequelize.INTEGER.UNSIGNED,
+          field: "userId",
+          comment: "ID пользователя",
+          allowNull: false,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
+      "users",
+      {
+        id: {
           type: Sequelize.INTEGER,
-          field: "UserId",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "Users", key: "id" },
-          allowNull: true,
+          field: "id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        address: {
+          type: Sequelize.STRING(50),
+          field: "address",
+          comment: "Адрес кошелька",
+          unique: true,
+          allowNull: false,
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
         },
       },
       { transaction },
@@ -219,7 +213,7 @@ const rollbackCommands = (transaction) => [
   },
   {
     fn: "dropTable",
-    params: ["Users", { transaction }],
+    params: ["users", { transaction }],
   },
 ];
 

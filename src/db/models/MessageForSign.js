@@ -2,15 +2,13 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class MessageForSign extends Model {
-    static associate(models) {
-      this.belongsTo(models.User);
-    }
+    static associate() {}
   }
 
   MessageForSign.init(
     {
       address: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(50),
         validate: { isLowercase: true },
         allowNull: false,
         comment: 'Адрес кошелька',
@@ -18,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       message: { type: DataTypes.STRING, allowNull: false, comment: 'Сообщение на подпись' },
       createdAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW, comment: 'Дата добавления' },
       wasUsed: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false, comment: 'Было использовано' },
+      userId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false, comment: 'ID пользователя' },
     },
     {
       sequelize,

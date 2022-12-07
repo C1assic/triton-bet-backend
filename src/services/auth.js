@@ -11,7 +11,7 @@ const createToken = async ({ ip, userId, transaction }) => {
     {
       token,
       authIpAddress: ip,
-      UserId: userId,
+      userId,
     },
     {
       transaction,
@@ -27,7 +27,7 @@ const createMessageForSign = async ({ address, userId, transaction }) => {
   message += `Timestamp: ${Date.now()}\n`;
   message += `Nonce: ${getRandomString(20)}\n`;
 
-  const messageForSign = await MessageForSign.create({ address, message, UserId: userId }, { transaction });
+  const messageForSign = await MessageForSign.create({ address, message, userId }, { transaction });
 
   return messageForSign.message;
 };
@@ -38,7 +38,7 @@ const getUserIdByToken = async ({ token, transaction }) => {
       token,
       isCanceled: false,
     },
-    attributes: ['UserId'],
+    attributes: ['userId'],
     transaction,
   });
 
@@ -46,7 +46,7 @@ const getUserIdByToken = async ({ token, transaction }) => {
     authToken.lastRequestAt = Date.now();
     await authToken.save({ transaction });
 
-    return authToken.UserId;
+    return authToken.userId;
   }
 
   return null;
@@ -72,7 +72,7 @@ const auth = async ({ address, signature, ip, transaction }) => {
       createdAt: {
         [Op.gte]: new Date(Date.now() - authConfig.timeToSign), // >= current time - time to sign
       },
-      attributes: ['message', 'UserId'],
+      attributes: ['message', 'userId'],
       wasUsed: false,
     },
     transaction,
@@ -84,7 +84,7 @@ const auth = async ({ address, signature, ip, transaction }) => {
 
   messageForSign.wasUsed = true;
 
-  const token = await createToken({ ip, userId: messageForSign.UserId, transaction });
+  const token = await createToken({ ip, userId: messageForSign.userId, transaction });
   await messageForSign.save({ transaction });
 
   return token;
