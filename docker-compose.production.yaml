@@ -1,0 +1,88 @@
+version: '3.9'
+services:
+  redis:
+    image: redis:7.0.5-alpine
+    networks:
+      - redis-net
+    expose:
+      - 6379
+    volumes: 
+      - redis-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: postgres:15.1-alpine
+    user: postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+       - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    networks:
+      - postgres-net
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    build:
+      context: ./nginx
+      target: production
+    networks:
+      - nginx-net
+    ports:
+      - 443:443
+    restart: unless-stopped
+    environment:
+      NGINX_CERT: ${NGINX_CERT}
+      NGINX_CERT_KEY: ${NGINX_CERT_KEY}
+
+  api_gateway:
+    build:
+      context: ./src
+      dockerfile: ./.docker/api-gateway.Dockerfile
+      target: production
+    expose:
+      - 8080
+    networks:
+      - postgres-net
+      - redis-net
+      - nginx-net
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+
+volumes:
+  postgres-data:
+  redis-data:
+  pgadmin-data:
+
+networks:
+  postgres-net:
+  redis-net:
+  nginx-net:
+
+secrets:
+  nginx-cert:
+    external: true
+  nginx-key:
+    external: true

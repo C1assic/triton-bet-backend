@@ -1,0 +1,208 @@
+{
+    "tables": {
+        "AuthTokens": {
+            "tableName": "AuthTokens",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "token": {
+                    "allowNull": false,
+                    "unique": true,
+                    "comment": "Токен авторизации",
+                    "field": "token",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "lastRequestAt": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.NOW"
+                    },
+                    "comment": "Дата последнего запроса",
+                    "field": "lastRequestAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "authAt": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.NOW"
+                    },
+                    "comment": "Дата авторизации",
+                    "field": "authAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "authIpAddress": {
+                    "comment": "IP при авторизации",
+                    "field": "authIpAddress",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "isCanceled": {
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "comment": "Отозван ли токен",
+                    "field": "isCanceled",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "UserId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "UserId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Balances": {
+            "tableName": "Balances",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "balance": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Баланс",
+                    "field": "balance",
+                    "seqType": "Sequelize.DOUBLE"
+                },
+                "profit": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Профит",
+                    "field": "profit",
+                    "seqType": "Sequelize.DOUBLE"
+                },
+                "bonuse": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Бонус",
+                    "field": "bonuse",
+                    "seqType": "Sequelize.DOUBLE"
+                },
+                "UserId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "UserId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "MessageForSigns": {
+            "tableName": "MessageForSigns",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "address": {
+                    "allowNull": false,
+                    "comment": "Адрес кошелька",
+                    "field": "address",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "message": {
+                    "allowNull": false,
+                    "comment": "Сообщение на подпись",
+                    "field": "message",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.NOW"
+                    },
+                    "comment": "Дата добавления",
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "wasUsed": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "comment": "Было использовано",
+                    "field": "wasUsed",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "UserId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "UserId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Users": {
+            "tableName": "Users",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "address": {
+                    "allowNull": false,
+                    "unique": true,
+                    "comment": "Адрес кошелька",
+                    "field": "address",
+                    "seqType": "Sequelize.STRING(255)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "path": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current.json",
+    "backupPath": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current_bak.json",
+    "exists": false,
+    "revision": 1
+}
