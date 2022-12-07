@@ -13,10 +13,28 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         comment: 'Адрес кошелька',
       },
-      message: { type: DataTypes.STRING, allowNull: false, comment: 'Сообщение на подпись' },
-      createdAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW, comment: 'Дата добавления' },
-      wasUsed: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false, comment: 'Было использовано' },
-      userId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false, comment: 'ID пользователя' },
+      message: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        comment: 'Сообщение на подпись',
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+        comment: 'Дата добавления',
+      },
+      wasUsed: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+        comment: 'Было использовано',
+      },
+      userId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        comment: 'ID пользователя',
+      },
     },
     {
       sequelize,

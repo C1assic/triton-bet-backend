@@ -105,6 +105,78 @@
             },
             "indexes": []
         },
+        "Deposits": {
+            "tableName": "Deposits",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "hash": {
+                    "unique": true,
+                    "allowNull": false,
+                    "comment": "Хэш транзакции",
+                    "field": "hash",
+                    "seqType": "Sequelize.STRING"
+                },
+                "from": {
+                    "allowNull": false,
+                    "comment": "Адресс отправителя",
+                    "field": "from",
+                    "seqType": "Sequelize.STRING"
+                },
+                "to": {
+                    "allowNull": true,
+                    "comment": "Адресс получателя",
+                    "field": "to",
+                    "seqType": "Sequelize.STRING"
+                },
+                "timestamp": {
+                    "allowNull": true,
+                    "comment": "Дата совершения транзакции",
+                    "field": "timestamp",
+                    "seqType": "Sequelize.DATE"
+                },
+                "amount": {
+                    "allowNull": true,
+                    "comment": "Сумма депозита",
+                    "field": "amount",
+                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                },
+                "bonus": {
+                    "allowNull": true,
+                    "comment": "Сумма бонуса",
+                    "field": "bonus",
+                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                },
+                "blockNumber": {
+                    "allowNull": true,
+                    "comment": "Номер блока содержащего транзакцию",
+                    "field": "blockNumber",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "userId": {
+                    "allowNull": false,
+                    "comment": "ID пользователя",
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
         "MessageForSigns": {
             "tableName": "MessageForSigns",
             "schema": {
@@ -155,8 +227,8 @@
             },
             "indexes": []
         },
-        "users": {
-            "tableName": "users",
+        "Users": {
+            "tableName": "Users",
             "schema": {
                 "id": {
                     "allowNull": false,

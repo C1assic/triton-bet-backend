@@ -5,15 +5,16 @@ const Sequelize = require("sequelize");
  *
  * createTable() => "AuthTokens", deps: []
  * createTable() => "Balances", deps: []
+ * createTable() => "Deposits", deps: []
  * createTable() => "MessageForSigns", deps: []
- * createTable() => "users", deps: []
+ * createTable() => "Users", deps: []
  *
  */
 
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-12-07T15:01:38.664Z",
+  created: "2022-12-07T15:30:10.415Z",
   comment: "",
 };
 
@@ -118,6 +119,81 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
+      "Deposits",
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          field: "id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        hash: {
+          type: Sequelize.STRING,
+          field: "hash",
+          comment: "Хэш транзакции",
+          allowNull: false,
+          unique: true,
+        },
+        from: {
+          type: Sequelize.STRING,
+          field: "from",
+          comment: "Адресс отправителя",
+          allowNull: false,
+        },
+        to: {
+          type: Sequelize.STRING,
+          field: "to",
+          comment: "Адресс получателя",
+          allowNull: true,
+        },
+        timestamp: {
+          type: Sequelize.DATE,
+          field: "timestamp",
+          comment: "Дата совершения транзакции",
+          allowNull: true,
+        },
+        amount: {
+          type: Sequelize.DOUBLE.UNSIGNED,
+          field: "amount",
+          comment: "Сумма депозита",
+          allowNull: true,
+        },
+        bonus: {
+          type: Sequelize.DOUBLE.UNSIGNED,
+          field: "bonus",
+          comment: "Сумма бонуса",
+          allowNull: true,
+        },
+        blockNumber: {
+          type: Sequelize.INTEGER.UNSIGNED,
+          field: "blockNumber",
+          comment: "Номер блока содержащего транзакцию",
+          allowNull: true,
+        },
+        userId: {
+          type: Sequelize.INTEGER.UNSIGNED,
+          field: "userId",
+          comment: "ID пользователя",
+          allowNull: false,
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
       "MessageForSigns",
       {
         id: {
@@ -166,7 +242,7 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
-      "users",
+      "Users",
       {
         id: {
           type: Sequelize.INTEGER,
@@ -209,11 +285,15 @@ const rollbackCommands = (transaction) => [
   },
   {
     fn: "dropTable",
+    params: ["Deposits", { transaction }],
+  },
+  {
+    fn: "dropTable",
     params: ["MessageForSigns", { transaction }],
   },
   {
     fn: "dropTable",
-    params: ["users", { transaction }],
+    params: ["Users", { transaction }],
   },
 ];
 
