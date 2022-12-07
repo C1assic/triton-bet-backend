@@ -45,6 +45,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         comment: 'Номер блока содержащего транзакцию',
       },
+      status: {
+        type: DataTypes.ENUM('Expected', 'Received'),
+        allowNull: false,
+        defaultValue: 'Expected',
+        comment: 'Статус депозита',
+      },
       userId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
