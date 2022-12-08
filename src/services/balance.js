@@ -1,5 +1,6 @@
-const BalanceError = require('../errors/BalanceError');
 const { Balance, BalanceOperation } = require('../db/models');
+const BalanceError = require('../errors/BalanceError');
+const { pubsub, msgNames } = require('../pubSub');
 
 const createOperation = async ({ userId, basic, profit, bonuse, lock, transaction }) => {
   const operation = await BalanceOperation.create(
@@ -42,6 +43,8 @@ const addToBalance = async ({ userId, basic = 0, profit = 0, bonuse = 0, transac
 
   const operation = await createOperation({ userId, basic, profit, bonuse, transaction, lock: true });
   await balance.save({ transaction });
+
+  pubsub.publish(msgNames.BALANCE_UPDATE, balance.get({ plain: true }));
 
   return {
     operationId: operation.id,
@@ -101,6 +104,8 @@ const takeFromBalance = async ({
   const operation = await createOperation({ userId, ...diff, transaction, lock: true });
   await balance.save({ transaction });
 
+  pubsub.publish(msgNames.BALANCE_UPDATE, balance.get({ plain: true }));
+
   return {
     operationId: operation.id,
     balance,
@@ -134,6 +139,8 @@ const cancelOperation = async ({ operationId, transaction }) => {
   operation.сanceledAt = Date.now();
 
   await Promise.all([operation.save({ transaction }), balance.save({ transaction })]);
+
+  pubsub.publish(msgNames.BALANCE_UPDATE, balance.get({ plain: true }));
 
   return {
     operationId: operation.id,
