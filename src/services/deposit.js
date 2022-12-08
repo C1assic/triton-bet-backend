@@ -1,10 +1,11 @@
+const config = require('../config/deposit');
 const { Deposit } = require('../db/models');
 
 const depositConfig = () => ({
-  enable: depositConfig.enable,
-  contractAddress: depositConfig.contractAddress,
-  receiverAddress: depositConfig.receiverAddress,
-  confirmationQty: depositConfig.confirmationQty,
+  enable: config.enable,
+  contractAddress: config.contractAddress,
+  receiverAddress: config.receiverAddress,
+  confirmationQty: config.confirmationQty,
 });
 
 const createDeposit = async ({ hash, from, userId, transaction }) => {
