@@ -18,12 +18,10 @@ module.exports = {
   `,
   resolvers: {
     User: {
-      balance: async ({ id }) => {
-        const balance = await balanceService.getBalanceByUserId({ userId: id }).catch(() => {
+      balance: ({ id }) =>
+        balanceService.getBalanceByUserId({ userId: id }).catch(() => {
           throw new InternalServerGraphQLError();
-        });
-        return balance;
-      },
+        }),
     },
   },
 };
