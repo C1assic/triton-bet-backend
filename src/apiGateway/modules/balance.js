@@ -1,4 +1,5 @@
 const gql = require('graphql-tag');
+const InternalServerGraphQLError = require('../errors/InternalServerGraphQLError');
 const balanceService = require('../../services/balance');
 
 module.exports = {
@@ -17,7 +18,12 @@ module.exports = {
   `,
   resolvers: {
     User: {
-      balance: ({ id }) => balanceService.getBalanceByUserId({ userId: id }),
+      balance: async ({ id }) => {
+        const balance = await balanceService.getBalanceByUserId({ userId: id }).catch(() => {
+          throw new InternalServerGraphQLError();
+        });
+        return balance;
+      },
     },
   },
 };

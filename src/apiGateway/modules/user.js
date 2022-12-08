@@ -17,12 +17,10 @@ module.exports = {
   resolvers: {
     Query: {
       me: async (root, args, { userId }) => {
-        try {
-          const user = await userService.getUserById(userId);
-          return user;
-        } catch {
+        const user = await userService.getUserById(userId).catch(() => {
           throw new InternalServerGraphQLError();
-        }
+        });
+        return user;
       },
     },
   },
