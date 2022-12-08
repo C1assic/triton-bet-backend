@@ -49,6 +49,8 @@ const cancelWithdrawal = async ({ id, userId, transaction }) => {
   await balanceService.cancelOperation({ operationId: withdrawal.operationId, transaction });
   withdrawal.status = 'Canceled';
 
+  await withdrawal.save({ transaction });
+
   return withdrawal;
 };
 
