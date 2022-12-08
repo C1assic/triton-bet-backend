@@ -8,7 +8,6 @@ module.exports = {
   id: 'balance',
   typeDefs: gql`
     type Balance {
-      userId: Int!
       basic: Float
       profit: Float
       bonuse: Float
