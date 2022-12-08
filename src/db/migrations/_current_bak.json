@@ -158,6 +158,15 @@
                     "field": "blockNumber",
                     "seqType": "Sequelize.INTEGER.UNSIGNED"
                 },
+                "status": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "Expected"
+                    },
+                    "comment": "Статус депозита",
+                    "field": "status",
+                    "seqType": "Sequelize.ENUM('Expected', 'Received')"
+                },
                 "userId": {
                     "allowNull": false,
                     "comment": "ID пользователя",
@@ -256,10 +265,78 @@
                 }
             },
             "indexes": []
+        },
+        "Withdrawals": {
+            "tableName": "Withdrawals",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "amount": {
+                    "allowNull": false,
+                    "comment": "Сумма вывода в USDT",
+                    "field": "amount",
+                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                },
+                "hash": {
+                    "allowNull": true,
+                    "comment": "Хэш транзакции",
+                    "field": "hash",
+                    "seqType": "Sequelize.STRING"
+                },
+                "from": {
+                    "allowNull": true,
+                    "comment": "Адресс отправителя",
+                    "field": "from",
+                    "seqType": "Sequelize.STRING(50)"
+                },
+                "to": {
+                    "allowNull": false,
+                    "comment": "Адресс получателя",
+                    "field": "to",
+                    "seqType": "Sequelize.STRING(50)"
+                },
+                "nonce": {
+                    "allowNull": true,
+                    "comment": "Уникальный номер транзакции",
+                    "field": "nonce",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "status": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "Awaiting processing"
+                    },
+                    "comment": "Статус заявки на вывод",
+                    "field": "status",
+                    "seqType": "Sequelize.ENUM('Awaiting processing', 'In processing', 'Processed', 'Canceled', 'Rejected', 'Error')"
+                },
+                "userId": {
+                    "allowNull": false,
+                    "comment": "ID пользователя",
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
         }
     },
     "path": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current.json",
     "backupPath": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current_bak.json",
-    "exists": false,
-    "revision": 1
+    "exists": true,
+    "revision": 2
 }

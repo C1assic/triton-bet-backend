@@ -105,6 +105,77 @@
             },
             "indexes": []
         },
+        "BalanceOperations": {
+            "tableName": "BalanceOperations",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "basic": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Базовый баланс",
+                    "field": "basic",
+                    "seqType": "Sequelize.DOUBLE"
+                },
+                "profit": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Профит",
+                    "field": "profit",
+                    "seqType": "Sequelize.DOUBLE"
+                },
+                "bonuse": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "comment": "Бонусы",
+                    "field": "bonuse",
+                    "seqType": "Sequelize.DOUBLE"
+                },
+                "userId": {
+                    "allowNull": false,
+                    "comment": "ID пользователя",
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "doneAt": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.NOW"
+                    },
+                    "comment": "Дата совершения операции",
+                    "field": "doneAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "сanceled": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "comment": "Была отменена",
+                    "field": "сanceled",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "сanceledAt": {
+                    "allowNull": true,
+                    "comment": "Дата отмены операции",
+                    "field": "сanceledAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
         "Deposits": {
             "tableName": "Deposits",
             "schema": {
@@ -165,7 +236,7 @@
                     },
                     "comment": "Статус депозита",
                     "field": "status",
-                    "seqType": "Sequelize.ENUM('Expected', 'Received')"
+                    "seqType": "Sequelize.ENUM('Expected', 'Received', 'Error')"
                 },
                 "userId": {
                     "allowNull": false,
@@ -321,6 +392,12 @@
                     "field": "userId",
                     "seqType": "Sequelize.INTEGER.UNSIGNED"
                 },
+                "operationId": {
+                    "allowNull": false,
+                    "comment": "ID операции",
+                    "field": "operationId",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -338,5 +415,5 @@
     "path": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current.json",
     "backupPath": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 2
+    "revision": 3
 }
