@@ -11,7 +11,7 @@ module.exports = {
     }
 
     type Mutation {
-      addDeposit(hash: Hex!, from: EthAddress!): Deposit @auth(error: true) @rateLimit(window: "3s", max: 1)
+      deposit(hash: Hex!, from: EthAddress!): Deposit @auth(error: true) @rateLimit(window: "3s", max: 1)
     }
 
     type Deposit {
@@ -46,8 +46,8 @@ module.exports = {
         }),
     },
     Mutation: {
-      addDeposit: (root, { hash, from }, { userId }) =>
-        depositService.addDeposit({ hash, from, userId }).catch(() => {
+      deposit: (root, { hash, from }, { userId }) =>
+        depositService.createDeposit({ hash, from, userId }).catch(() => {
           throw new InternalServerGraphQLError();
         }),
     },
