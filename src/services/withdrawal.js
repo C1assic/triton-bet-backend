@@ -1,4 +1,5 @@
 const WithdrawalError = require('../errors/WithdrawalError');
+const { pubsub, msgNames } = require('../pubSub');
 const { Withdrawal } = require('../db/models');
 const balanceService = require('./balance');
 
@@ -30,6 +31,8 @@ const makeWithdrawal = async ({ to, amount, userId, transaction }) => {
     },
   );
 
+  pubsub.publish(msgNames.NEW_WITHDRAWAL, withdrawal.get({ plain: true }));
+
   return withdrawal;
 };
 
@@ -50,6 +53,8 @@ const cancelWithdrawal = async ({ id, userId, transaction }) => {
   withdrawal.status = 'Canceled';
 
   await withdrawal.save({ transaction });
+
+  pubsub.publish(msgNames.WITHDRAWAL_UPDATE, withdrawal.get({ plain: true }));
 
   return withdrawal;
 };
