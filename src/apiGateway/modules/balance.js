@@ -35,6 +35,7 @@ module.exports = {
           () => provider.asyncIterator([msgNames.BALANCE_UPDATE]),
           (payload, args, { userId }) => payload.userId && userId === payload.id,
         ),
+        resolve: (payload) => payload,
       },
     },
   },
