@@ -19,7 +19,7 @@ module.exports = {
     }
 
     type Subscription {
-      balanceUpdate: Balance
+      balanceUpdate: Balance @auth(error: true)
     }
   `,
   resolvers: {
