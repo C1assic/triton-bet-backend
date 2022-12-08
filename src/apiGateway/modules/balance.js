@@ -19,7 +19,7 @@ module.exports = {
   resolvers: {
     User: {
       balance: ({ id }) =>
-        balanceService.getBalanceByUserId({ userId: id }).catch(() => {
+        balanceService.getBalance({ userId: id }).catch(() => {
           throw new InternalServerGraphQLError();
         }),
     },
