@@ -2,6 +2,7 @@ const WithdrawalError = require('../errors/WithdrawalError');
 const { pubsub, msgNames } = require('../pubSub');
 const { Withdrawal } = require('../db/models');
 const balanceService = require('./balance');
+const config = require('../config/withdrawal');
 
 const getWithdrawalsByUserId = async ({ userId, lock, transaction }) => {
   const withdrawals = await Withdrawal.findAll({
@@ -16,6 +17,8 @@ const getWithdrawalsByUserId = async ({ userId, lock, transaction }) => {
 };
 
 const makeWithdrawal = async ({ to, amount, userId, transaction }) => {
+  if (!config.enable) throw new WithdrawalError('Withdrawal disabled');
+
   const { operationId } = await balanceService.takeFromBalance({ amount, userId, transaction, useProfit: true });
 
   const withdrawal = await Withdrawal.create(
