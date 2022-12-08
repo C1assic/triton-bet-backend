@@ -45,6 +45,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         comment: 'ID пользователя',
       },
+      operationId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        comment: 'ID операции',
+      },
     },
     {
       sequelize,
