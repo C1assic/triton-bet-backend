@@ -71,6 +71,22 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
+  migration:
+    build:
+      context: ./src
+      dockerfile: ./.docker/migration.Dockerfile
+      target: development
+    restart: on-failure
+    networks:
+      - postgres-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
 volumes:
   postgres-data:
   redis-data:
