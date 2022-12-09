@@ -20,7 +20,7 @@ const createOperation = async ({ userId, basic, profit, bonuse, lock, transactio
 };
 
 const getBalance = async ({ userId, lock, transaction }) => {
-  const balance = await Balance.findOrCreate({
+  const [balance] = await Balance.findOrCreate({
     where: {
       userId,
     },
