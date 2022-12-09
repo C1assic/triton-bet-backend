@@ -31,17 +31,17 @@ module.exports = (sequelize, DataTypes) => {
         comment: 'Дата совершения транзакции',
       },
       amount: {
-        type: DataTypes.DOUBLE.UNSIGNED,
+        type: DataTypes.DOUBLE,
         allowNull: true,
         comment: 'Сумма депозита',
       },
       bonus: {
-        type: DataTypes.DOUBLE.UNSIGNED,
+        type: DataTypes.DOUBLE,
         allowNull: true,
         comment: 'Сумма бонуса',
       },
       blockNumber: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: true,
         comment: 'Номер блока содержащего транзакцию',
       },
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         comment: 'Статус депозита',
       },
       userId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: false,
         comment: 'ID пользователя',
       },

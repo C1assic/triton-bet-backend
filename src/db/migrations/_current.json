@@ -54,7 +54,7 @@
                     "allowNull": false,
                     "comment": "ID пользователя",
                     "field": "userId",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -76,7 +76,7 @@
                     },
                     "comment": "Базовый баланс",
                     "field": "basic",
-                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                    "seqType": "Sequelize.DOUBLE"
                 },
                 "profit": {
                     "allowNull": false,
@@ -85,7 +85,7 @@
                     },
                     "comment": "Профит",
                     "field": "profit",
-                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                    "seqType": "Sequelize.DOUBLE"
                 },
                 "bonuse": {
                     "allowNull": false,
@@ -94,13 +94,13 @@
                     },
                     "comment": "Бонусы",
                     "field": "bonuse",
-                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                    "seqType": "Sequelize.DOUBLE"
                 },
                 "userId": {
                     "allowNull": false,
                     "comment": "ID пользователя",
                     "field": "userId",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -146,7 +146,7 @@
                     "allowNull": false,
                     "comment": "ID пользователя",
                     "field": "userId",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "doneAt": {
                     "allowNull": false,
@@ -215,19 +215,19 @@
                     "allowNull": true,
                     "comment": "Сумма депозита",
                     "field": "amount",
-                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                    "seqType": "Sequelize.DOUBLE"
                 },
                 "bonus": {
                     "allowNull": true,
                     "comment": "Сумма бонуса",
                     "field": "bonus",
-                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                    "seqType": "Sequelize.DOUBLE"
                 },
                 "blockNumber": {
                     "allowNull": true,
                     "comment": "Номер блока содержащего транзакцию",
                     "field": "blockNumber",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "status": {
                     "allowNull": false,
@@ -242,7 +242,7 @@
                     "allowNull": false,
                     "comment": "ID пользователя",
                     "field": "userId",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -302,7 +302,7 @@
                     "allowNull": false,
                     "comment": "ID пользователя",
                     "field": "userId",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -351,7 +351,7 @@
                     "allowNull": false,
                     "comment": "Сумма вывода в USDT",
                     "field": "amount",
-                    "seqType": "Sequelize.DOUBLE.UNSIGNED"
+                    "seqType": "Sequelize.DOUBLE"
                 },
                 "hash": {
                     "allowNull": true,
@@ -375,7 +375,7 @@
                     "allowNull": true,
                     "comment": "Уникальный номер транзакции",
                     "field": "nonce",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "status": {
                     "allowNull": false,
@@ -390,13 +390,13 @@
                     "allowNull": false,
                     "comment": "ID пользователя",
                     "field": "userId",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "operationId": {
                     "allowNull": false,
                     "comment": "ID операции",
                     "field": "operationId",
-                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -414,6 +414,6 @@
     },
     "path": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current.json",
     "backupPath": "C:\\Users\\C1assic\\Desktop\\triton-bet-backend\\src\\db\\migrations\\_current_bak.json",
-    "exists": true,
-    "revision": 3
+    "exists": false,
+    "revision": 1
 }

@@ -5,16 +5,18 @@ const Sequelize = require("sequelize");
  *
  * createTable() => "AuthTokens", deps: []
  * createTable() => "Balances", deps: []
+ * createTable() => "BalanceOperations", deps: []
  * createTable() => "Deposits", deps: []
  * createTable() => "MessageForSigns", deps: []
  * createTable() => "Users", deps: []
+ * createTable() => "Withdrawals", deps: []
  *
  */
 
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-12-07T15:30:10.415Z",
+  created: "2022-12-09T10:51:42.690Z",
   comment: "",
 };
 
@@ -64,7 +66,7 @@ const migrationCommands = (transaction) => [
           defaultValue: false,
         },
         userId: {
-          type: Sequelize.INTEGER.UNSIGNED,
+          type: Sequelize.INTEGER,
           field: "userId",
           comment: "ID пользователя",
           allowNull: false,
@@ -86,31 +88,94 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         basic: {
-          type: Sequelize.DOUBLE.UNSIGNED,
+          type: Sequelize.DOUBLE,
           field: "basic",
           comment: "Базовый баланс",
           defaultValue: 0,
           allowNull: false,
         },
         profit: {
-          type: Sequelize.DOUBLE.UNSIGNED,
+          type: Sequelize.DOUBLE,
           field: "profit",
           comment: "Профит",
           defaultValue: 0,
           allowNull: false,
         },
         bonuse: {
-          type: Sequelize.DOUBLE.UNSIGNED,
+          type: Sequelize.DOUBLE,
           field: "bonuse",
           comment: "Бонусы",
           defaultValue: 0,
           allowNull: false,
         },
         userId: {
-          type: Sequelize.INTEGER.UNSIGNED,
+          type: Sequelize.INTEGER,
           field: "userId",
           comment: "ID пользователя",
           allowNull: false,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
+      "BalanceOperations",
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          field: "id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        basic: {
+          type: Sequelize.DOUBLE,
+          field: "basic",
+          comment: "Базовый баланс",
+          defaultValue: 0,
+          allowNull: false,
+        },
+        profit: {
+          type: Sequelize.DOUBLE,
+          field: "profit",
+          comment: "Профит",
+          defaultValue: 0,
+          allowNull: false,
+        },
+        bonuse: {
+          type: Sequelize.DOUBLE,
+          field: "bonuse",
+          comment: "Бонусы",
+          defaultValue: 0,
+          allowNull: false,
+        },
+        userId: {
+          type: Sequelize.INTEGER,
+          field: "userId",
+          comment: "ID пользователя",
+          allowNull: false,
+        },
+        doneAt: {
+          type: Sequelize.DATE,
+          field: "doneAt",
+          comment: "Дата совершения операции",
+          defaultValue: Sequelize.NOW,
+          allowNull: false,
+        },
+        сanceled: {
+          type: Sequelize.BOOLEAN,
+          field: "сanceled",
+          comment: "Была отменена",
+          defaultValue: false,
+          allowNull: false,
+        },
+        сanceledAt: {
+          type: Sequelize.DATE,
+          field: "сanceledAt",
+          comment: "Дата отмены операции",
+          allowNull: true,
         },
       },
       { transaction },
@@ -154,25 +219,32 @@ const migrationCommands = (transaction) => [
           allowNull: true,
         },
         amount: {
-          type: Sequelize.DOUBLE.UNSIGNED,
+          type: Sequelize.DOUBLE,
           field: "amount",
           comment: "Сумма депозита",
           allowNull: true,
         },
         bonus: {
-          type: Sequelize.DOUBLE.UNSIGNED,
+          type: Sequelize.DOUBLE,
           field: "bonus",
           comment: "Сумма бонуса",
           allowNull: true,
         },
         blockNumber: {
-          type: Sequelize.INTEGER.UNSIGNED,
+          type: Sequelize.INTEGER,
           field: "blockNumber",
           comment: "Номер блока содержащего транзакцию",
           allowNull: true,
         },
+        status: {
+          type: Sequelize.ENUM("Expected", "Received", "Error"),
+          field: "status",
+          comment: "Статус депозита",
+          defaultValue: "Expected",
+          allowNull: false,
+        },
         userId: {
-          type: Sequelize.INTEGER.UNSIGNED,
+          type: Sequelize.INTEGER,
           field: "userId",
           comment: "ID пользователя",
           allowNull: false,
@@ -230,7 +302,7 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         userId: {
-          type: Sequelize.INTEGER.UNSIGNED,
+          type: Sequelize.INTEGER,
           field: "userId",
           comment: "ID пользователя",
           allowNull: false,
@@ -272,6 +344,88 @@ const migrationCommands = (transaction) => [
       { transaction },
     ],
   },
+  {
+    fn: "createTable",
+    params: [
+      "Withdrawals",
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          field: "id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        amount: {
+          type: Sequelize.DOUBLE,
+          field: "amount",
+          comment: "Сумма вывода в USDT",
+          allowNull: false,
+        },
+        hash: {
+          type: Sequelize.STRING,
+          field: "hash",
+          comment: "Хэш транзакции",
+          allowNull: true,
+        },
+        from: {
+          type: Sequelize.STRING(50),
+          field: "from",
+          comment: "Адресс отправителя",
+          allowNull: true,
+        },
+        to: {
+          type: Sequelize.STRING(50),
+          field: "to",
+          comment: "Адресс получателя",
+          allowNull: false,
+        },
+        nonce: {
+          type: Sequelize.INTEGER,
+          field: "nonce",
+          comment: "Уникальный номер транзакции",
+          allowNull: true,
+        },
+        status: {
+          type: Sequelize.ENUM(
+            "Awaiting processing",
+            "In processing",
+            "Processed",
+            "Canceled",
+            "Rejected",
+            "Error"
+          ),
+          field: "status",
+          comment: "Статус заявки на вывод",
+          defaultValue: "Awaiting processing",
+          allowNull: false,
+        },
+        userId: {
+          type: Sequelize.INTEGER,
+          field: "userId",
+          comment: "ID пользователя",
+          allowNull: false,
+        },
+        operationId: {
+          type: Sequelize.INTEGER,
+          field: "operationId",
+          comment: "ID операции",
+          allowNull: false,
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
+        },
+      },
+      { transaction },
+    ],
+  },
 ];
 
 const rollbackCommands = (transaction) => [
@@ -285,6 +439,10 @@ const rollbackCommands = (transaction) => [
   },
   {
     fn: "dropTable",
+    params: ["BalanceOperations", { transaction }],
+  },
+  {
+    fn: "dropTable",
     params: ["Deposits", { transaction }],
   },
   {
@@ -294,6 +452,10 @@ const rollbackCommands = (transaction) => [
   {
     fn: "dropTable",
     params: ["Users", { transaction }],
+  },
+  {
+    fn: "dropTable",
+    params: ["Withdrawals", { transaction }],
   },
 ];
 

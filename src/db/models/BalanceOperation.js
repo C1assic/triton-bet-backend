@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       basic: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Базовый баланс' },
       profit: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Профит' },
       bonuse: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Бонусы' },
-      userId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false, comment: 'ID пользователя' },
+      userId: { type: DataTypes.INTEGER, allowNull: false, comment: 'ID пользователя' },
       doneAt: {
         type: DataTypes.DATE,
         allowNull: false,

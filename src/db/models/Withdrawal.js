@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   Withdrawal.init(
     {
       amount: {
-        type: DataTypes.DOUBLE.UNSIGNED,
+        type: DataTypes.DOUBLE,
         allowNull: false,
         comment: 'Сумма вывода в USDT',
       },
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         comment: 'Адресс получателя',
       },
       nonce: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: true,
         comment: 'Уникальный номер транзакции',
       },
@@ -41,12 +41,12 @@ module.exports = (sequelize, DataTypes) => {
         comment: 'Статус заявки на вывод',
       },
       userId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: false,
         comment: 'ID пользователя',
       },
       operationId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: false,
         comment: 'ID операции',
       },

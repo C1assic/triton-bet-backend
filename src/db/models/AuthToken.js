@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         comment: 'Отозван ли токен',
       },
       userId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         allowNull: false,
         comment: 'ID пользователя',
       },

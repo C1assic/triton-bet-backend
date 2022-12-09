@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Balance.init(
     {
-      basic: { type: DataTypes.DOUBLE.UNSIGNED, allowNull: false, defaultValue: 0, comment: 'Базовый баланс' },
-      profit: { type: DataTypes.DOUBLE.UNSIGNED, allowNull: false, defaultValue: 0, comment: 'Профит' },
-      bonuse: { type: DataTypes.DOUBLE.UNSIGNED, allowNull: false, defaultValue: 0, comment: 'Бонусы' },
-      userId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false, comment: 'ID пользователя' },
+      basic: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Базовый баланс' },
+      profit: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Профит' },
+      bonuse: { type: DataTypes.DOUBLE, allowNull: false, defaultValue: 0, comment: 'Бонусы' },
+      userId: { type: DataTypes.INTEGER, allowNull: false, comment: 'ID пользователя' },
     },
     {
       sequelize,
