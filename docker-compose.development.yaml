@@ -45,9 +45,6 @@ services:
     ports:
       - 80:80
     restart: unless-stopped
-    environment:
-      NGINX_CERT: ${NGINX_CERT}
-      NGINX_CERT_KEY: ${NGINX_CERT_KEY}
 
   api_gateway:
     build:
