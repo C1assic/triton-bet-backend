@@ -12,7 +12,7 @@ const getUserById = async ({ id, transaction }) => {
 };
 
 const getUserByAddress = async ({ address, lock, transaction }) => {
-  const user = await User.findOrCreate({
+  const [user] = await User.findOrCreate({
     where: {
       address,
     },
