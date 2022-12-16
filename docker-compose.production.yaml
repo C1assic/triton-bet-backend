@@ -19,9 +19,9 @@ services:
     image: postgres:15.1-alpine
     user: postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB?err}
+      POSTGRES_USER: ${POSTGRES_USER?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?err}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
        - postgres-data:/var/lib/postgresql/data
@@ -47,8 +47,8 @@ services:
       - 443:443
     restart: unless-stopped
     environment:
-      NGINX_CERT: ${NGINX_CERT}
-      NGINX_CERT_KEY: ${NGINX_CERT_KEY}
+      NGINX_CERT: ${NGINX_CERT?err}
+      NGINX_CERT_KEY: ${NGINX_CERT_KEY?err}
 
   api_gateway:
     image: ${DOCKER_REGISTRY?err}/api_gateway:${VERSION:-latest}
@@ -69,9 +69,9 @@ services:
       redis:
         condition: service_healthy
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB?err}
+      POSTGRES_USER: ${POSTGRES_USER?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?err}
 
   migration:
     image: ${DOCKER_REGISTRY?err}/migration:${VERSION:-latest}
@@ -86,9 +86,9 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB?err}
+      POSTGRES_USER: ${POSTGRES_USER?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?err}
 
 volumes:
   postgres-data:
