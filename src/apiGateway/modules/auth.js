@@ -10,12 +10,7 @@ module.exports = {
   typeDefs: gql`
     type Mutation {
       getMessageForSign(address: EthAddress!): String!
-      auth(input: AuthInput!): String!
-    }
-
-    input AuthInput {
-      address: EthAddress!
-      signature: String!
+      auth(address: EthAddress!, signature: String!): String!
     }
   `,
   resolvers: {
@@ -37,10 +32,8 @@ module.exports = {
           throw new InternalServerGraphQLError();
         }
       },
-      async auth(root, { input }, { ip }) {
+      async auth(root, { address, signature }, { ip }) {
         try {
-          const { signature, address } = input;
-
           const token = await authService.auth({
             address,
             signature,
