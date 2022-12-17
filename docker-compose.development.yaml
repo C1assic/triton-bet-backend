@@ -95,9 +95,3 @@ networks:
   postgres-net:
   redis-net:
   nginx-net:
-
-secrets:
-  nginx-cert:
-    external: true
-  nginx-key:
-    external: true
