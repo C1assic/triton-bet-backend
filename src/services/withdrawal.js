@@ -19,6 +19,8 @@ const getWithdrawalsByUserId = async ({ userId, lock, transaction }) => {
 const makeWithdrawal = async ({ to, amount, userId, transaction }) => {
   if (!config.enable) throw new WithdrawalError('Withdrawal disabled');
 
+  if (amount < config.amount) throw new WithdrawalError('Minimum allowable amount:', config.amount);
+
   const { operationId } = await balanceService.takeFromBalance({ amount, userId, transaction, useProfit: true });
 
   const withdrawal = await Withdrawal.create(
