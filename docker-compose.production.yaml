@@ -37,7 +37,6 @@ services:
       retries: 5
 
   nginx:
-    image: ${DOCKER_REGISTRY?err}/nginx:${VERSION:-latest}
     build:
       context: ./nginx
       target: production
@@ -51,7 +50,6 @@ services:
       NGINX_CERT_KEY: ${NGINX_CERT_KEY?err}
 
   api_gateway:
-    image: ${DOCKER_REGISTRY?err}/api_gateway:${VERSION:-latest}
     build:
       context: ./src
       dockerfile: ./.docker/api-gateway.Dockerfile
@@ -74,7 +72,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?err}
 
   migration:
-    image: ${DOCKER_REGISTRY?err}/migration:${VERSION:-latest}
     build:
       context: ./src
       dockerfile: ./.docker/migration.Dockerfile
