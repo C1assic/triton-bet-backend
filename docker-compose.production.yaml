@@ -4,8 +4,8 @@ services:
     image: redis:7.0.5-alpine
     networks:
       - redis-net
-    expose:
-      - 6379
+    ports:
+      - 6379:6379
     volumes: 
       - redis-data:/data
     restart: unless-stopped
@@ -25,8 +25,8 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
        - postgres-data:/var/lib/postgresql/data
-    expose:
-      - 5432
+    ports:
+      - 5432:5432
     networks:
       - postgres-net
     restart: unless-stopped
@@ -54,8 +54,8 @@ services:
       context: ./src
       dockerfile: ./.docker/api-gateway.Dockerfile
       target: production
-    expose:
-      - 8080
+    ports:
+      - 8080:8080
     networks:
       - postgres-net
       - redis-net
